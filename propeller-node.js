@@ -53,13 +53,13 @@ app.use(function (req, res, next) {
     next();
 });
 
-// Tell express to serve up static pages from /public
+// Tell express to serve up static pages from directory "html"
 app.use(express.static(__dirname + '/html'));
 
+// But... /serial-buffer is generated here from the seral buffer.
 app.get('/serial-buffer', function (req, res) {
 	res.send(propRxBuffer);
 });
-
 
 // Put a friendly message on the terminal
 console.log("Server running at http://127.0.0.1:" + SERVER_PORT + "/");
