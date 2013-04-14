@@ -33,12 +33,60 @@
             overflow:hidden;
         }
     </style>
+    <script src="http://cdn.alloyui.com/2.0.0pr4/aui/aui-min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        YUI().ready(function(A) {
+            YUI().use('node', 'transition', function (Y) {
+                Y.one('.aui-btn').on('click', function() {
+                    this.transition(
+                        {
+                            width: '500px'
+                        });
+                });
+            });
+            
+            // Websockets
+            var chatUrl = 'http://propeller-node.zicog.c9.io/chat';
+            var newsUrl = 'http://propeller-node.zicog.c9.io/news';
+
+            var chat = io.connect(chatUrl);
+            var news = io.connect(newsUrl);
+
+            chat.on('connect', function () {
+                console.log('Chat connected');
+                chat.emit('hi!');
+
+                chat.on('chat message', function (data) {
+                    console.log('Chat:', data);
+                    chat.emit('hi!');
+                });
+
+                news.on('connect', function () {
+                    console.log('Chat connected');
+                });
+
+                news.on('item', function (data) {
+                    console.log('news item:', data);
+                    news.emit('woot');
+                });
+            });
+        });
+    </script>
+
+     
   </head>
   <body>
     <div id='headingdiv'>
         <h1>Propeller Serial Server</h1>
         <img src="Propeller_beanie.gif" alt="Propeller Beanie logo should be here."> 
     </div>
+
+    <div style="text-align: center;">
+        <button id="try-btn" class="aui-btn aui-btn-large aui-btn-block aui-btn-primary" type="button">Press me</button>
+    </div>
+
+
     <div id='msgdiv'><p id='message'>Propeller messages go here.</p></div>
 
     <a href="serial-buffer">View the raw serial input buffer</a> 
