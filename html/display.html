@@ -7,13 +7,15 @@
         padding: 0px;
         background: #000000;
       }
-      #container {
+      #container{
+        width: 1024px;
+	    height: 768px;
+	    position: absolute;
+	    left: 50%;
+	    top: 50%;
+	    margin: -384px 0 0 -512px;
         background-image: url("http://www.html5canvastutorials.com/demos/assets/blue-background.jpg");
-        display: inline-block;
-        overflow: hidden;
-        width: 1000px;
-        height: 600px;
-      }
+    }
     </style>
     <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.4.2.min.js"></script>
   </head>
@@ -25,8 +27,8 @@
       // http://www.html5canvastutorials.com/kineticjs
       var stage = new Kinetic.Stage({
         container: 'container',
-        width: 1000,
-        height: 600
+        width: 1024,
+        height: 768
       });
       var layer = new Kinetic.Layer();
       var rectX = stage.getWidth() / 2 - 50;
@@ -99,13 +101,7 @@
       });
 
       layer.add(box);
-      stage.add(layer);
- 
- 
-     
-     
-     
-     
+      stage.add(layer);     
  </script>
   </body>
 </html>
