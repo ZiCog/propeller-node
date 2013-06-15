@@ -1,5 +1,9 @@
 "use strict";
-/*
+
+
+
+///////////////// SERIAL PORT HANDLER /////////////////////////////////
+
 var serialport = require("serialport");
 var SerialPort = serialport.SerialPort;
 
@@ -35,21 +39,25 @@ sp.on("error", function (err) {
    propRxBuffer = "Error: " + err.message;
 });
 
-*/
+
+///////////////// FAKE SERIAL PORT DAT INPUT////////////////////////////
 
 // Fake serial port data source
+/*
 var seqNo = 0;
 setInterval(function () {
     propRxBuffer = "Prop message: #" + seqNo;
     seqNo += 1;
 }, 1000);
-
+*/
 
 
 var propRxBuffer = "Propeller Port not open yet.";
 
-var SERVER_PORT = process.env.PORT;
+///////////////// HTTP SERVER /////////////////////////////////////////
 
+//var SERVER_PORT = process.env.PORT;
+var SERVER_PORT = 8080;
 
 // Load the http and express modules for our http server.
 var http = require('http');
@@ -69,10 +77,12 @@ app.use(function (req, res, next) {
 // Tell express to serve up static pages from directory "html"
 app.use(express.static(__dirname + '/html'));
 
-// But... /serial-buffer is generated here from the seral buffer.
+// But... the page /serial-buffer is generated here from the seral buffer.
 app.get('/serial-buffer', function (req, res) {
 	res.send(propRxBuffer);
 });
+
+///////////////// WEBSOCKET SERVER /////////////////////////////////////////
 
 // Web sockets
 var io = require('socket.io').listen(server);
